@@ -1,0 +1,47 @@
+Basic Text Editor using Java (Fundamental File operations)
+
+It is multi purpose software, which will be implemented using Java programming language.
+
+The objective: To provide users to save important notes and text based content.
+
+Text editors will also provide varoius different text formatting tools like increasing font size, changing default font style and many more
+
+Fundamental File operations such as read, write of files will be used in the project.
+
+_____________________________________________________
+copied:
+
+INTRODUCTION OF PROJECT A useful text editor is an essential component of any personal computer. Every day we need to make notes, compose documents, and record vital pieces of information. We depend on our text editor. In a broad sense, the application provides us with the ability to create, edit, and save files containing text. Text is a general category of keystrokes including, but not limited.
+
+OBJECTIVE & SCOPE OF PROJECT A text editor is a computer program that lets a user enter, change, store, and usually print text (characters and numbers, each encoded by the computer and its input and output devices, arranged to have meaning to users or to other programs). Text editors can be used to enter program language source statements or to create documents such as technical manuals.
+
+PROJECT PLANNING JAVA provide an user friendly environment which enables selection of various controls like labels, buttons, textbox etc and dragging and dropping them at desired position to give a user friendly environment. In designing the software, ease of understanding is maintained to ensure that a person with a little knowledge of computer can work efficiently.
+
+
+DEFINITION OF PROBLEM There are many problems in existing system of note paid editor these are-
+
+Demerits of existing system
+
+The main disadvantage of Notepad is that it is very simple software and its primary function is not for HTML, because it is not its primary function it does not read the language. problems of notepad these are1. Easy to make a mistake. 2. Slow, as all the code, has to be written by hand.
+
+
+advantages of existing system
+
+Notepad has a very simple and easy to use interface that doesn't take much memory and resources of the computer.
+
+Notepad offers users the option of editing and formatting texts especially when removing formatting from texts copied from a source e.g. the Internet. 
+
+Notepad is a very useful tool for starters learning Website design and development in the sense that you get the opportunity to type in the html codes and see what each function does. You can also create a simple website with it, view it on the internet and host it online.
+
+
+
+Limitations Of proposed system 
+
+Text files used by Notepad should be no larger than 45K. Notepad cannot open a file that exceeds 54 kilobytes (K) in size and does not allow you to continue editing a file if the file size reaches between 45K and 54K. problem I'm having is that after it goes to the A: drive and I open the text file in Notepad it only shows a portion of the address list. It's showing approximately 2650 lines of addresses (with more info that just addresses) even though in the POS software there is between 5000 - 20000 lines of addresses.
+
+
+Future scope
+
+Report on different basis can be easily created on demand. This project can be extended so that it will provide home delivery in those cities where this facility is available in present time.
+
+Areas For Improvement Although a text editor should be a lightweight tool (and an inexpensive one), it should still pack a decent punch. If you need or want more from a text editor than you get from Notepad--but you don't want to waste money or system resources--we have six free options for you. If you don't care about syntax highlighting or other coding features, and you just want "Notepad, but better," look at Notepad, which delivers improved just-plain-text editing for simple notes, memos, to-do lists, and other text-oriented tasks. It looks a lot like classic Notepad, but has quite a few more options, such as improved searching, sorting, and conversion functions (for dealing with text files
