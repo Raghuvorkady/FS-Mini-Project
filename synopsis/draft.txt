@@ -1,0 +1,19 @@
+Abstract:
+A useful text editor is an essential component of any personal computer. If the task is to create a simple todo list else to create a html page, either of the times we make use of the text editor in our day to day life. Not just that, also to make notes, compose documents, and record vital pieces of information. We depend on our text editor. In a broad sense, the application provides us with the ability to create, edit, and save files containing text.
+        A text editor is a computer program that lets a user open, modify, save, and usually read text. 
+And also, the advantage here is, it doesn’t make the fans of your systems to run harder, because it’s a light weight software. Therefore, the software capable of running in any system.
+
+Aim: 
+To create, read, edit and save text files.
+
+Objectives:
+To enable users to:
+-	create text files
+-	read text files
+-	modify text files
+-	save text files
+-	In addition to text files, also provide features to create text based files such as html, csv etc..
+
+Conclusion:
+This project uses the basic concepts of file structure to achieve the objectives of the poject.
+Concepts like Opening, Closing, Reading and Writing of files will be used during implementation.
