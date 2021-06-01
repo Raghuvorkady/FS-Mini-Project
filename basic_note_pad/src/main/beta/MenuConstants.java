@@ -35,7 +35,7 @@ interface MenuConstants {
      String viewStatusBar = "Status Bar";
 
      String helpHelpTopic = "Help Topic";
-     String helpAboutNotepad = "About Javapad";
+     String helpAboutNotepad = "About";
 
-     String aboutText = "Your Javapad";
+     String aboutText = "Your NotepadX";
 }

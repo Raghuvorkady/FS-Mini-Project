@@ -13,7 +13,6 @@ public class Notepad implements ActionListener, MenuConstants {
     JLabel statusBar;
 
     private final boolean saved = true;
-    String applicationName = "Javapad";
 
     String searchString, replaceString;
     int lastSearchIndex;
@@ -29,8 +28,7 @@ public class Notepad implements ActionListener, MenuConstants {
             replaceItem, gotoItem, selectAllItem;
 
     Notepad() {
-        String fileName = "Untitled";
-        jFrame = new JFrame(fileName + " - " + applicationName);
+        jFrame = new JFrame();
         jTextArea = new JTextArea(30, 60);
         statusBar = new JLabel("||       Ln 1, Col 1  ", JLabel.RIGHT);
         jFrame.add(new JScrollPane(jTextArea), BorderLayout.CENTER);
@@ -194,7 +192,7 @@ fileHandler.saved=true;
                 break;
             }
             case helpAboutNotepad:
-                JOptionPane.showMessageDialog(Notepad.this.jFrame, aboutText, "Dedicated 2 u!",
+                JOptionPane.showMessageDialog(Notepad.this.jFrame, aboutText, "About",
                         JOptionPane.INFORMATION_MESSAGE);
                 break;
             default:

@@ -10,7 +10,7 @@ class FileOperation implements FileOperationInterface {
     boolean saved;
     boolean newFileFlag;
     String fileName;
-    String applicationTitle = "Notepad - JavaTpoint";
+    String applicationTitle = "NotepadX";
 
     File fileRef;
     JFileChooser chooser;
