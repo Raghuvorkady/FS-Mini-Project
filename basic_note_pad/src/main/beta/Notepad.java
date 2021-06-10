@@ -1,7 +1,10 @@
 package main.beta;
 
 import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Date;
@@ -315,9 +318,9 @@ fileHandler.saved=true;
         createCheckBoxMenuItem(viewStatusBar, KeyEvent.VK_S, viewMenu, this).setSelected(true);
 
 
-        temp = createMenuItem(helpHelpTopic, KeyEvent.VK_H, helpMenu, this);
+        /*temp = createMenuItem(helpHelpTopic, KeyEvent.VK_H, helpMenu, this);
         temp.setEnabled(false);
-        helpMenu.addSeparator();
+        helpMenu.addSeparator();*/
         createMenuItem(helpAboutNotepad, KeyEvent.VK_A, helpMenu, this);
 
         MenuListener editMenuListener = new MenuListener() {
