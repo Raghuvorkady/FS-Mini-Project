@@ -183,6 +183,12 @@ fileHandler.saved=true;
             }
             case formatFont:
                 break;
+            case sans_serif:
+                jTextArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
+                break;
+            case monospace:
+                jTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
+                break;
             case formatForeground:
                 showForegroundColorDialog();
                 break;
@@ -278,6 +284,9 @@ fileHandler.saved=true;
         JMenu viewMenu = createMenu(viewText, KeyEvent.VK_V, mb);
         JMenu helpMenu = createMenu(helpText, KeyEvent.VK_H, mb);
 
+        JMenuItem font1 = new JMenuItem(sans_serif);
+        JMenuItem font2 = new JMenuItem(monospace);
+
         createMenuItem(fileNew, KeyEvent.VK_N, fileMenu, KeyEvent.VK_N, this);
         createMenuItem(fileOpen, KeyEvent.VK_O, fileMenu, KeyEvent.VK_O, this);
         createMenuItem(fileSave, KeyEvent.VK_S, fileMenu, KeyEvent.VK_S, this);
@@ -310,7 +319,10 @@ fileHandler.saved=true;
 
         createCheckBoxMenuItem(formatWordWrap, KeyEvent.VK_W, formatMenu, this);
 
-        createMenuItem(formatFont, KeyEvent.VK_F, formatMenu, this);
+        JMenu font = new JMenu(formatFont);
+        font.add(font1);
+        font.add(font2);
+        formatMenu.add(font);
         formatMenu.addSeparator();
         createMenuItem(formatForeground, KeyEvent.VK_T, formatMenu, this);
         createMenuItem(formatBackground, KeyEvent.VK_P, formatMenu, this);

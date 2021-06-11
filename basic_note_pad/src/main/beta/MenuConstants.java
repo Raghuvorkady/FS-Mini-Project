@@ -29,6 +29,8 @@ interface MenuConstants {
 
      String formatWordWrap = "Word Wrap";
      String formatFont = "Font...";
+     String sans_serif = "Sans serif";
+     String monospace = "Monospace";
      String formatForeground = "Set Text color...";
      String formatBackground = "Set Pad color...";
 
