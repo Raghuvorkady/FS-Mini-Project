@@ -93,60 +93,25 @@ public class Notepad implements ActionListener, MenuConstants {
 
     private void createMenuBar(JFrame jFrame) {
         JMenuBar jMenuBar = new JMenuBar();
-        JMenuItem jMenuItemTemp;
 
         // file menu
-        JMenu fileMenu = createMenu(fileText, KeyEvent.VK_F, jMenuBar);
-        createMenuItem(fileNew, KeyEvent.VK_N, fileMenu, KeyEvent.VK_N, this);
-        createMenuItem(fileOpen, KeyEvent.VK_O, fileMenu, KeyEvent.VK_O, this);
-        createMenuItem(fileSave, KeyEvent.VK_S, fileMenu, KeyEvent.VK_S, this);
-        createMenuItem(fileSaveAs, KeyEvent.VK_A, fileMenu, this);
-        fileMenu.addSeparator();
-
-        jMenuItemTemp = createMenuItem(filePageSetup, KeyEvent.VK_U, fileMenu, this);
-        jMenuItemTemp.setEnabled(false);
-
-        fileMenu.addSeparator();
-        createMenuItem(fileExit, KeyEvent.VK_X, fileMenu, this);
+        createFileMenu(jMenuBar);
 
         // edit menu
-        JMenu editMenu = createMenu(editText, KeyEvent.VK_E, jMenuBar);
-        cutItem = createMenuItem(editCut, KeyEvent.VK_T, editMenu, KeyEvent.VK_X, this);
-        copyItem = createMenuItem(editCopy, KeyEvent.VK_C, editMenu, KeyEvent.VK_C, this);
-        createMenuItem(editPaste, KeyEvent.VK_P, editMenu, KeyEvent.VK_V, this);
-        deleteItem = createMenuItem(editDelete, KeyEvent.VK_L, editMenu, this);
-        deleteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
-        editMenu.addSeparator();
-
-        jMenuItemTemp = createMenuItem(editUndo, KeyEvent.VK_U, editMenu, KeyEvent.VK_Z, this);
-        jMenuItemTemp.setEnabled(false);
-        editMenu.addSeparator();
-
-        gotoItem = createMenuItem(editGoTo, KeyEvent.VK_G, editMenu, KeyEvent.VK_G, this);
-        editMenu.addSeparator();
-        selectAllItem = createMenuItem(editSelectAll, KeyEvent.VK_A, editMenu, KeyEvent.VK_A, this);
-        createMenuItem(editTimeDate, KeyEvent.VK_D, editMenu, this)
-                .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
-
+        JMenu editMenu = createEditMenu(jMenuBar);
 
         // format menu
-        JMenu formatMenu = createMenu(formatText, KeyEvent.VK_O, jMenuBar);
-        createCheckBoxMenuItem(formatWordWrap, KeyEvent.VK_W, formatMenu, this);
-
-        formatMenu.addSeparator();
-        createMenuItem(formatForeground, KeyEvent.VK_T, formatMenu, this);
-        createMenuItem(formatBackground, KeyEvent.VK_P, formatMenu, this);
+        createFormatMenu(jMenuBar);
 
         // view menu
-        JMenu viewMenu = createMenu(viewText, KeyEvent.VK_V, jMenuBar);
-        createCheckBoxMenuItem(viewStatusBar, KeyEvent.VK_S, viewMenu, this).setSelected(true);
+        createViewMenu(jMenuBar);
 
         // help menu
-        JMenu helpMenu = createMenu(helpText, KeyEvent.VK_H, jMenuBar);
-        createMenuItem(helpAboutNotepad, KeyEvent.VK_A, helpMenu, this);
+        createHelpMenu(jMenuBar);
 
         MenuListener editMenuListener = new MenuListener() {
-            public void menuSelected(MenuEvent menuEvent) {
+            @Override
+            public void menuSelected(MenuEvent e) {
                 if (Notepad.this.jTextArea.getText().length() == 0) {
                     selectAllItem.setEnabled(false);
                     gotoItem.setEnabled(false);
@@ -165,14 +130,76 @@ public class Notepad implements ActionListener, MenuConstants {
                 }
             }
 
-            public void menuDeselected(MenuEvent menuEvent) {
+            @Override
+            public void menuDeselected(MenuEvent e) {
+
             }
 
-            public void menuCanceled(MenuEvent menuEvent) {
+            @Override
+            public void menuCanceled(MenuEvent e) {
+
             }
         };
+
         editMenu.addMenuListener(editMenuListener);
         jFrame.setJMenuBar(jMenuBar);
+    }
+
+    private void createFileMenu(JMenuBar jMenuBar) {
+        JMenuItem jMenuItemTemp;
+        JMenu fileMenu = createMenu(fileText, KeyEvent.VK_F, jMenuBar);
+        createMenuItem(fileNew, KeyEvent.VK_N, fileMenu, KeyEvent.VK_N, this);
+        createMenuItem(fileOpen, KeyEvent.VK_O, fileMenu, KeyEvent.VK_O, this);
+        createMenuItem(fileSave, KeyEvent.VK_S, fileMenu, KeyEvent.VK_S, this);
+        createMenuItem(fileSaveAs, KeyEvent.VK_A, fileMenu, this);
+        fileMenu.addSeparator();
+
+        jMenuItemTemp = createMenuItem(filePageSetup, KeyEvent.VK_U, fileMenu, this);
+        jMenuItemTemp.setEnabled(false);
+
+        fileMenu.addSeparator();
+        createMenuItem(fileExit, KeyEvent.VK_X, fileMenu, this);
+    }
+
+    private JMenu createEditMenu(JMenuBar jMenuBar) {
+        JMenuItem jMenuItemTemp;
+        JMenu editMenu = createMenu(editText, KeyEvent.VK_E, jMenuBar);
+        cutItem = createMenuItem(editCut, KeyEvent.VK_T, editMenu, KeyEvent.VK_X, this);
+        copyItem = createMenuItem(editCopy, KeyEvent.VK_C, editMenu, KeyEvent.VK_C, this);
+        createMenuItem(editPaste, KeyEvent.VK_P, editMenu, KeyEvent.VK_V, this);
+        deleteItem = createMenuItem(editDelete, KeyEvent.VK_L, editMenu, this);
+        deleteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+        editMenu.addSeparator();
+
+        jMenuItemTemp = createMenuItem(editUndo, KeyEvent.VK_U, editMenu, KeyEvent.VK_Z, this);
+        jMenuItemTemp.setEnabled(false);
+        editMenu.addSeparator();
+
+        gotoItem = createMenuItem(editGoTo, KeyEvent.VK_G, editMenu, KeyEvent.VK_G, this);
+        editMenu.addSeparator();
+        selectAllItem = createMenuItem(editSelectAll, KeyEvent.VK_A, editMenu, KeyEvent.VK_A, this);
+        createMenuItem(editTimeDate, KeyEvent.VK_D, editMenu, this)
+                .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
+        return editMenu;
+    }
+
+    private void createFormatMenu(JMenuBar jMenuBar) {
+        JMenu formatMenu = createMenu(formatText, KeyEvent.VK_O, jMenuBar);
+        createCheckBoxMenuItem(formatWordWrap, KeyEvent.VK_W, formatMenu, this);
+
+        formatMenu.addSeparator();
+        createMenuItem(formatForeground, KeyEvent.VK_T, formatMenu, this);
+        createMenuItem(formatBackground, KeyEvent.VK_P, formatMenu, this);
+    }
+
+    private void createViewMenu(JMenuBar jMenuBar) {
+        JMenu viewMenu = createMenu(viewText, KeyEvent.VK_V, jMenuBar);
+        createCheckBoxMenuItem(viewStatusBar, KeyEvent.VK_S, viewMenu, this).setSelected(true);
+    }
+
+    private void createHelpMenu(JMenuBar jMenuBar) {
+        JMenu helpMenu = createMenu(helpText, KeyEvent.VK_H, jMenuBar);
+        createMenuItem(helpAboutNotepad, KeyEvent.VK_A, helpMenu, this);
     }
 
     private JMenu createMenu(String s, int key, JMenuBar toMenuBar) {
