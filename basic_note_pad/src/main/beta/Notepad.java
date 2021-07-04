@@ -65,27 +65,30 @@ public class Notepad implements ActionListener, MenuConstants {
                     statusBar.setText("||       Ln " + (lineNumber + 1) + ", Col " + (column + 1));
                 });
 
-        DocumentListener myListener = new DocumentListener() {
-            public void changedUpdate(DocumentEvent e) {
+        DocumentListener documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
                 fileHandler.saved = false;
             }
 
+            @Override
             public void removeUpdate(DocumentEvent e) {
                 fileHandler.saved = false;
             }
 
-            public void insertUpdate(DocumentEvent e) {
+            @Override
+            public void changedUpdate(DocumentEvent e) {
                 fileHandler.saved = false;
             }
         };
-        jTextArea.getDocument().addDocumentListener(myListener);
+        jTextArea.getDocument().addDocumentListener(documentListener);
 
-        WindowListener frameClose = new WindowAdapter() {
+        WindowListener windowListener = new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 if (fileHandler.confirmSave()) System.exit(0);
             }
         };
-        jFrame.addWindowListener(frameClose);
+        jFrame.addWindowListener(windowListener);
     }
 
     @Override
@@ -254,7 +257,7 @@ public class Notepad implements ActionListener, MenuConstants {
     }
 
     private JCheckBoxMenuItem createCheckBoxMenuItem(String s,
-                                             int key, JMenu toMenu, ActionListener al) {
+                                                     int key, JMenu toMenu, ActionListener al) {
         JCheckBoxMenuItem temp = new JCheckBoxMenuItem(s);
         temp.setMnemonic(key);
         temp.addActionListener(al);
