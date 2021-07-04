@@ -15,6 +15,20 @@ class FileOperation implements FileOperationInterface {
     File fileRef;
     JFileChooser chooser;
 
+    FileOperation(Notepad notepad) {
+        this.notepad = notepad;
+
+        saved = true;
+        newFileFlag = true;
+        fileName = "Untitled";
+        fileRef = new File(fileName);
+        this.notepad.jFrame.setTitle(fileName + " - " + applicationTitle);
+
+        chooser = new JFileChooser();
+
+        chooser.setCurrentDirectory(new File("."));
+    }
+
     @Override
     public boolean isSave() {
         return saved;
@@ -33,20 +47,6 @@ class FileOperation implements FileOperationInterface {
     @Override
     public void setFileName(String fileName) {
         this.fileName = fileName;
-    }
-
-    FileOperation(Notepad notepad) {
-        this.notepad = notepad;
-
-        saved = true;
-        newFileFlag = true;
-        fileName = "Untitled";
-        fileRef = new File(fileName);
-        this.notepad.jFrame.setTitle(fileName + " - " + applicationTitle);
-
-        chooser = new JFileChooser();
-
-        chooser.setCurrentDirectory(new File("."));
     }
 
     @Override
