@@ -111,15 +111,7 @@ public class Notepad implements ActionListener, MenuConstants {
             case fileExit:
                 if (fileHandler.confirmSave()) System.exit(0);
                 break;
-            //todo: remove filePrint
-            case filePrint:
-                JOptionPane.showMessageDialog(
-                        Notepad.this.jFrame,
-                        "Get ur printer repaired first! It seems u dont have one!",
-                        "Bad Printer",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-                break;
+
             case editCut:
                 jTextArea.cut();
                 break;
@@ -132,22 +124,7 @@ public class Notepad implements ActionListener, MenuConstants {
             case editDelete:
                 jTextArea.replaceSelection("");
                 break;
-            //todo: remove editFind
-            case editFind:
-                if (Notepad.this.jTextArea.getText().length() == 0)
-                    return;
-                break;
-            //todo: remove editFindNext
-            case editFindNext:
-                if (Notepad.this.jTextArea.getText().length() == 0)
-                    return;
-                if (findReplaceDialog == null)
-                    statusBar.setText("Use Find option of Edit Menu first !!!!");
-                break;
-            //todo: remove editReplace
-            case editReplace:
-                if (Notepad.this.jTextArea.getText().length() == 0)
-                    break;
+
             case editGoTo:
                 if (Notepad.this.jTextArea.getText().length() == 0)
                     return;
@@ -164,17 +141,7 @@ public class Notepad implements ActionListener, MenuConstants {
                 jTextArea.setLineWrap(temp.isSelected());
                 break;
             }
-            //todo: remove formatFont
-            case formatFont:
-                break;
-            //todo: remove
-            case sans_serif:
-                jTextArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
-                break;
-            //todo: remove
-            case monospace:
-                jTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
-                break;
+
             case formatForeground:
                 showForegroundColorDialog();
                 break;
@@ -285,8 +252,7 @@ public class Notepad implements ActionListener, MenuConstants {
         JMenu viewMenu = createMenu(viewText, KeyEvent.VK_V, mb);
         JMenu helpMenu = createMenu(helpText, KeyEvent.VK_H, mb);
 
-        JMenuItem font1 = new JMenuItem(sans_serif);
-        JMenuItem font2 = new JMenuItem(monospace);
+
 
         createMenuItem(fileNew, KeyEvent.VK_N, fileMenu, KeyEvent.VK_N, this);
         createMenuItem(fileOpen, KeyEvent.VK_O, fileMenu, KeyEvent.VK_O, this);
@@ -295,7 +261,7 @@ public class Notepad implements ActionListener, MenuConstants {
         fileMenu.addSeparator();
         temp = createMenuItem(filePageSetup, KeyEvent.VK_U, fileMenu, this);
         temp.setEnabled(false);
-        createMenuItem(filePrint, KeyEvent.VK_P, fileMenu, KeyEvent.VK_P, this);
+
         fileMenu.addSeparator();
         createMenuItem(fileExit, KeyEvent.VK_X, fileMenu, this);
 
@@ -308,10 +274,7 @@ public class Notepad implements ActionListener, MenuConstants {
         deleteItem = createMenuItem(editDelete, KeyEvent.VK_L, editMenu, this);
         deleteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
         editMenu.addSeparator();
-        findItem = createMenuItem(editFind, KeyEvent.VK_F, editMenu, KeyEvent.VK_F, this);
-        findNextItem = createMenuItem(editFindNext, KeyEvent.VK_N, editMenu, this);
-        findNextItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
-        replaceItem = createMenuItem(editReplace, KeyEvent.VK_R, editMenu, KeyEvent.VK_H, this);
+
         gotoItem = createMenuItem(editGoTo, KeyEvent.VK_G, editMenu, KeyEvent.VK_G, this);
         editMenu.addSeparator();
         selectAllItem = createMenuItem(editSelectAll, KeyEvent.VK_A, editMenu, KeyEvent.VK_A, this);
@@ -320,10 +283,7 @@ public class Notepad implements ActionListener, MenuConstants {
 
         createCheckBoxMenuItem(formatWordWrap, KeyEvent.VK_W, formatMenu, this);
 
-        JMenu font = new JMenu(formatFont);
-        font.add(font1);
-        font.add(font2);
-        formatMenu.add(font);
+
         formatMenu.addSeparator();
         createMenuItem(formatForeground, KeyEvent.VK_T, formatMenu, this);
         createMenuItem(formatBackground, KeyEvent.VK_P, formatMenu, this);
@@ -331,23 +291,17 @@ public class Notepad implements ActionListener, MenuConstants {
         createCheckBoxMenuItem(viewStatusBar, KeyEvent.VK_S, viewMenu, this).setSelected(true);
 
 
-        /*temp = createMenuItem(helpHelpTopic, KeyEvent.VK_H, helpMenu, this);
-        temp.setEnabled(false);
-        helpMenu.addSeparator();*/
+
         createMenuItem(helpAboutNotepad, KeyEvent.VK_A, helpMenu, this);
 
         MenuListener editMenuListener = new MenuListener() {
             public void menuSelected(MenuEvent menuEvent) {
                 if (Notepad.this.jTextArea.getText().length() == 0) {
-                    findItem.setEnabled(false);
-                    findNextItem.setEnabled(false);
-                    replaceItem.setEnabled(false);
+
                     selectAllItem.setEnabled(false);
                     gotoItem.setEnabled(false);
                 } else {
-                    findItem.setEnabled(true);
-                    findNextItem.setEnabled(true);
-                    replaceItem.setEnabled(true);
+
                     selectAllItem.setEnabled(true);
                     gotoItem.setEnabled(true);
                 }
