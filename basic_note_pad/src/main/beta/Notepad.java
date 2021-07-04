@@ -93,9 +93,9 @@ public class Notepad implements ActionListener, MenuConstants {
 
     // a function written in ActionListener interface
     @Override
-    public void actionPerformed(ActionEvent ev) {
-        String cmdText = ev.getActionCommand();
-        switch (cmdText) {
+    public void actionPerformed(ActionEvent actionEvent) {
+        String actionCommand = actionEvent.getActionCommand();
+        switch (actionCommand) {
             case fileNew:
                 fileHandler.newFile();
                 break;
@@ -160,7 +160,7 @@ public class Notepad implements ActionListener, MenuConstants {
                 jTextArea.insert(new Date().toString(), jTextArea.getSelectionStart());
                 break;
             case formatWordWrap: {
-                JCheckBoxMenuItem temp = (JCheckBoxMenuItem) ev.getSource();
+                JCheckBoxMenuItem temp = (JCheckBoxMenuItem) actionEvent.getSource();
                 jTextArea.setLineWrap(temp.isSelected());
                 break;
             }
@@ -182,7 +182,7 @@ public class Notepad implements ActionListener, MenuConstants {
                 showBackgroundColorDialog();
                 break;
             case viewStatusBar: {
-                JCheckBoxMenuItem temp = (JCheckBoxMenuItem) ev.getSource();
+                JCheckBoxMenuItem temp = (JCheckBoxMenuItem) actionEvent.getSource();
                 statusBar.setVisible(temp.isSelected());
                 break;
             }
@@ -191,7 +191,7 @@ public class Notepad implements ActionListener, MenuConstants {
                         JOptionPane.INFORMATION_MESSAGE);
                 break;
             default:
-                statusBar.setText("This " + cmdText + " command is yet to be implemented");
+                statusBar.setText("This " + actionCommand + " command is yet to be implemented");
                 break;
         }
     }

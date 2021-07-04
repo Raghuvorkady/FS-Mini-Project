@@ -196,8 +196,9 @@ class FileOperation implements FileOperationInterface {
 
     @Override
     public void newFile() {
-        if (!confirmSave()) return;
-
+        if (!confirmSave()) {
+            return;
+        }
         this.notepad.jTextArea.setText("");
         fileName = "Untitled";
         fileRef = new File(fileName);
