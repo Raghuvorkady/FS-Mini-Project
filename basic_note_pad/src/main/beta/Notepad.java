@@ -111,7 +111,6 @@ public class Notepad implements ActionListener, MenuConstants {
             case fileExit:
                 if (fileHandler.confirmSave()) System.exit(0);
                 break;
-
             case editCut:
                 jTextArea.cut();
                 break;
@@ -124,7 +123,6 @@ public class Notepad implements ActionListener, MenuConstants {
             case editDelete:
                 jTextArea.replaceSelection("");
                 break;
-
             case editGoTo:
                 if (Notepad.this.jTextArea.getText().length() == 0)
                     return;
@@ -246,33 +244,31 @@ public class Notepad implements ActionListener, MenuConstants {
         JMenuBar mb = new JMenuBar();
         JMenuItem temp;
 
+        // file menu
         JMenu fileMenu = createMenu(fileText, KeyEvent.VK_F, mb);
-        JMenu editMenu = createMenu(editText, KeyEvent.VK_E, mb);
-        JMenu formatMenu = createMenu(formatText, KeyEvent.VK_O, mb);
-        JMenu viewMenu = createMenu(viewText, KeyEvent.VK_V, mb);
-        JMenu helpMenu = createMenu(helpText, KeyEvent.VK_H, mb);
-
-
-
         createMenuItem(fileNew, KeyEvent.VK_N, fileMenu, KeyEvent.VK_N, this);
         createMenuItem(fileOpen, KeyEvent.VK_O, fileMenu, KeyEvent.VK_O, this);
         createMenuItem(fileSave, KeyEvent.VK_S, fileMenu, KeyEvent.VK_S, this);
         createMenuItem(fileSaveAs, KeyEvent.VK_A, fileMenu, this);
         fileMenu.addSeparator();
+
         temp = createMenuItem(filePageSetup, KeyEvent.VK_U, fileMenu, this);
         temp.setEnabled(false);
 
         fileMenu.addSeparator();
         createMenuItem(fileExit, KeyEvent.VK_X, fileMenu, this);
 
-        temp = createMenuItem(editUndo, KeyEvent.VK_U, editMenu, KeyEvent.VK_Z, this);
-        temp.setEnabled(false);
-        editMenu.addSeparator();
+        // edit menu
+        JMenu editMenu = createMenu(editText, KeyEvent.VK_E, mb);
         cutItem = createMenuItem(editCut, KeyEvent.VK_T, editMenu, KeyEvent.VK_X, this);
         copyItem = createMenuItem(editCopy, KeyEvent.VK_C, editMenu, KeyEvent.VK_C, this);
         createMenuItem(editPaste, KeyEvent.VK_P, editMenu, KeyEvent.VK_V, this);
         deleteItem = createMenuItem(editDelete, KeyEvent.VK_L, editMenu, this);
         deleteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
+        editMenu.addSeparator();
+
+        temp = createMenuItem(editUndo, KeyEvent.VK_U, editMenu, KeyEvent.VK_Z, this);
+        temp.setEnabled(false);
         editMenu.addSeparator();
 
         gotoItem = createMenuItem(editGoTo, KeyEvent.VK_G, editMenu, KeyEvent.VK_G, this);
@@ -281,27 +277,29 @@ public class Notepad implements ActionListener, MenuConstants {
         createMenuItem(editTimeDate, KeyEvent.VK_D, editMenu, this)
                 .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 
-        createCheckBoxMenuItem(formatWordWrap, KeyEvent.VK_W, formatMenu, this);
 
+        // format menu
+        JMenu formatMenu = createMenu(formatText, KeyEvent.VK_O, mb);
+        createCheckBoxMenuItem(formatWordWrap, KeyEvent.VK_W, formatMenu, this);
 
         formatMenu.addSeparator();
         createMenuItem(formatForeground, KeyEvent.VK_T, formatMenu, this);
         createMenuItem(formatBackground, KeyEvent.VK_P, formatMenu, this);
 
+        // view menu
+        JMenu viewMenu = createMenu(viewText, KeyEvent.VK_V, mb);
         createCheckBoxMenuItem(viewStatusBar, KeyEvent.VK_S, viewMenu, this).setSelected(true);
 
-
-
+        // help menu
+        JMenu helpMenu = createMenu(helpText, KeyEvent.VK_H, mb);
         createMenuItem(helpAboutNotepad, KeyEvent.VK_A, helpMenu, this);
 
         MenuListener editMenuListener = new MenuListener() {
             public void menuSelected(MenuEvent menuEvent) {
                 if (Notepad.this.jTextArea.getText().length() == 0) {
-
                     selectAllItem.setEnabled(false);
                     gotoItem.setEnabled(false);
                 } else {
-
                     selectAllItem.setEnabled(true);
                     gotoItem.setEnabled(true);
                 }
