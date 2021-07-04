@@ -10,7 +10,6 @@ import java.awt.event.*;
 import java.util.Date;
 
 public class Notepad implements ActionListener, MenuConstants {
-
     JFrame jFrame;
     JTextArea jTextArea;
     JLabel statusBar;
@@ -87,30 +86,6 @@ public class Notepad implements ActionListener, MenuConstants {
             }
         };
         jFrame.addWindowListener(frameClose);
-
-/* 
-ta.append("Hello dear hello hi"); 
-ta.append("\nwho are u dear mister hello"); 
-ta.append("\nhello bye hel"); 
-ta.append("\nHello"); 
-ta.append("\nMiss u mister hello hell"); 
-fileHandler.saved=true; 
-*/
-    }
-
-    void goTo() {
-        int lineNumber = 0;
-        try {
-            lineNumber = jTextArea.getLineOfOffset(jTextArea.getCaretPosition()) + 1;
-            String tempStr = JOptionPane.showInputDialog(jFrame, "Enter Line Number:", "" + lineNumber);
-            if (tempStr == null) {
-                return;
-            }
-            lineNumber = Integer.parseInt(tempStr);
-            jTextArea.setCaretPosition(jTextArea.getLineStartOffset(lineNumber - 1));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -132,6 +107,7 @@ fileHandler.saved=true;
             case fileExit:
                 if (fileHandler.confirmSave()) System.exit(0);
                 break;
+            //todo: remove filePrint
             case filePrint:
                 JOptionPane.showMessageDialog(
                         Notepad.this.jFrame,
@@ -152,16 +128,19 @@ fileHandler.saved=true;
             case editDelete:
                 jTextArea.replaceSelection("");
                 break;
+            //todo: remove editFind
             case editFind:
                 if (Notepad.this.jTextArea.getText().length() == 0)
                     return;
                 break;
+            //todo: remove editFindNext
             case editFindNext:
                 if (Notepad.this.jTextArea.getText().length() == 0)
                     return;
                 if (findReplaceDialog == null)
                     statusBar.setText("Use Find option of Edit Menu first !!!!");
                 break;
+            //todo: remove editReplace
             case editReplace:
                 if (Notepad.this.jTextArea.getText().length() == 0)
                     break;
@@ -181,11 +160,14 @@ fileHandler.saved=true;
                 jTextArea.setLineWrap(temp.isSelected());
                 break;
             }
+            //todo: remove formatFont
             case formatFont:
                 break;
+            //todo: remove
             case sans_serif:
                 jTextArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 18));
                 break;
+            //todo: remove
             case monospace:
                 jTextArea.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 18));
                 break;
@@ -210,7 +192,22 @@ fileHandler.saved=true;
         }
     }
 
-    void showBackgroundColorDialog() {
+    private void goTo() {
+        int lineNumber = 0;
+        try {
+            lineNumber = jTextArea.getLineOfOffset(jTextArea.getCaretPosition()) + 1;
+            String tempStr = JOptionPane.showInputDialog(jFrame, "Enter Line Number:", "" + lineNumber);
+            if (tempStr == null) {
+                return;
+            }
+            lineNumber = Integer.parseInt(tempStr);
+            jTextArea.setCaretPosition(jTextArea.getLineStartOffset(lineNumber - 1));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showBackgroundColorDialog() {
         if (bgColorChooser == null)
             bgColorChooser = new JColorChooser();
         if (backgroundDialog == null)
@@ -225,7 +222,7 @@ fileHandler.saved=true;
         backgroundDialog.setVisible(true);
     }
 
-    void showForegroundColorDialog() {
+    private void showForegroundColorDialog() {
         if (fontColorChooser == null)
             fontColorChooser = new JColorChooser();
         if (foregroundDialog == null)
@@ -240,7 +237,7 @@ fileHandler.saved=true;
         foregroundDialog.setVisible(true);
     }
 
-    JMenuItem createMenuItem(String s, int key, JMenu toMenu, ActionListener al) {
+    private JMenuItem createMenuItem(String s, int key, JMenu toMenu, ActionListener al) {
         JMenuItem temp = new JMenuItem(s, key);
         temp.addActionListener(al);
         toMenu.add(temp);
@@ -248,7 +245,7 @@ fileHandler.saved=true;
         return temp;
     }
 
-    JMenuItem createMenuItem(String s, int key, JMenu toMenu, int aclKey, ActionListener al) {
+    private JMenuItem createMenuItem(String s, int key, JMenu toMenu, int aclKey, ActionListener al) {
         JMenuItem temp = new JMenuItem(s, key);
         temp.addActionListener(al);
         temp.setAccelerator(KeyStroke.getKeyStroke(aclKey, ActionEvent.CTRL_MASK));
@@ -256,7 +253,7 @@ fileHandler.saved=true;
         return temp;
     }
 
-    JCheckBoxMenuItem createCheckBoxMenuItem(String s,
+    private JCheckBoxMenuItem createCheckBoxMenuItem(String s,
                                              int key, JMenu toMenu, ActionListener al) {
         JCheckBoxMenuItem temp = new JCheckBoxMenuItem(s);
         temp.setMnemonic(key);
@@ -267,14 +264,14 @@ fileHandler.saved=true;
         return temp;
     }
 
-    JMenu createMenu(String s, int key, JMenuBar toMenuBar) {
+    private JMenu createMenu(String s, int key, JMenuBar toMenuBar) {
         JMenu temp = new JMenu(s);
         temp.setMnemonic(key);
         toMenuBar.add(temp);
         return temp;
     }
 
-    void createMenuBar(JFrame f) {
+    private void createMenuBar(JFrame f) {
         JMenuBar mb = new JMenuBar();
         JMenuItem temp;
 
@@ -336,7 +333,7 @@ fileHandler.saved=true;
         createMenuItem(helpAboutNotepad, KeyEvent.VK_A, helpMenu, this);
 
         MenuListener editMenuListener = new MenuListener() {
-            public void menuSelected(MenuEvent evvvv) {
+            public void menuSelected(MenuEvent menuEvent) {
                 if (Notepad.this.jTextArea.getText().length() == 0) {
                     findItem.setEnabled(false);
                     findNextItem.setEnabled(false);
@@ -369,9 +366,5 @@ fileHandler.saved=true;
         };
         editMenu.addMenuListener(editMenuListener);
         f.setJMenuBar(mb);
-    }
-
-    public static void main(String[] args) {
-        new Notepad();
     }
 }

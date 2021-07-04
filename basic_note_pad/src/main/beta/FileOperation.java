@@ -107,11 +107,8 @@ class FileOperation implements FileOperationInterface {
         try {
             fin = new FileInputStream(temp);
             din = new BufferedReader(new InputStreamReader(fin));
-            String str = " ";
-            while (str != null) {
-                str = din.readLine();
-                if (str == null)
-                    break;
+            String str;
+            while ((str = din.readLine()) != null) {
                 this.notepad.jTextArea.append(str + "\n");
             }
 
