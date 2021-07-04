@@ -7,10 +7,10 @@ interface MenuConstants {
      String viewText = "View";
      String helpText = "Help";
 
-     String fileNew = "New";
-     String fileOpen = "Open...";
-     String fileSave = "Save";
-     String fileSaveAs = "Save As...";
+     String fileNew = "New File";
+     String fileOpen = "Open File";
+     String fileSave = "Save File";
+     String fileSaveAs = "Save File As";
      String filePageSetup = "Page Setup...";
      String filePrint = "Print";
      String fileExit = "Exit";
@@ -36,7 +36,6 @@ interface MenuConstants {
 
      String viewStatusBar = "Status Bar";
 
-     String helpHelpTopic = "Help Topic";
      String helpAboutNotepad = "About";
 
      String aboutText = "Your NotepadX";

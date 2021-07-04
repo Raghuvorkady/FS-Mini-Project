@@ -91,6 +91,7 @@ public class Notepad implements ActionListener, MenuConstants {
         jFrame.addWindowListener(windowListener);
     }
 
+    // a function written in ActionListener interface
     @Override
     public void actionPerformed(ActionEvent ev) {
         String cmdText = ev.getActionCommand();
