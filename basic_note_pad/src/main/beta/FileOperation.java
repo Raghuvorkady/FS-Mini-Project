@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
 
-class FileOperation implements FileOperationInterface {
+class FileOperation  {
     Notepad notepad;
 
     boolean saved;
@@ -29,27 +29,22 @@ class FileOperation implements FileOperationInterface {
         chooser.setCurrentDirectory(new File("."));
     }
 
-    @Override
     public boolean isSave() {
         return saved;
     }
 
-    @Override
     public void setSave(boolean saved) {
         this.saved = saved;
     }
 
-    @Override
     public String getFileName() {
         return fileName;
     }
 
-    @Override
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
-    @Override
     public boolean saveFile(File temp) {
         FileWriter fout = null;
         try {
@@ -69,14 +64,12 @@ class FileOperation implements FileOperationInterface {
         return true;
     }
 
-    @Override
     public boolean saveThisFile() {
         if (!newFileFlag)
             return saveFile(fileRef);
         return saveAsFile();
     }
 
-    @Override
     public boolean saveAsFile() {
         File temp = null;
         chooser.setDialogTitle("Save As...");
@@ -99,7 +92,6 @@ class FileOperation implements FileOperationInterface {
         return saveFile(temp);
     }
 
-    @Override
     public boolean openFile(File temp) {
         FileInputStream fin = null;
         BufferedReader din = null;
@@ -128,7 +120,6 @@ class FileOperation implements FileOperationInterface {
         return true;
     }
 
-    @Override
     public void openFile() {
         if (!confirmSave()) return;
         chooser.setDialogTitle("Open File...");
@@ -162,7 +153,6 @@ class FileOperation implements FileOperationInterface {
             newFileFlag = true;
     }
 
-    @Override
     public void updateStatus(File temp, boolean saved) {
         if (saved) {
             this.saved = true;
@@ -180,7 +170,6 @@ class FileOperation implements FileOperationInterface {
         }
     }
 
-    @Override
     public boolean confirmSave() {
         String strMsg = "<html>The text in the " + fileName + " file has been changed.<br>" +
                 "Do you want to save the changes?<html>";
@@ -194,7 +183,6 @@ class FileOperation implements FileOperationInterface {
         return true;
     }
 
-    @Override
     public void newFile() {
         if (!confirmSave()) {
             return;

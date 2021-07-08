@@ -14,20 +14,17 @@ public class Notepad implements ActionListener, MenuConstants {
     JTextArea jTextArea;
     JLabel statusBar;
 
-    private final boolean saved = true;
-
-    String searchString, replaceString;
-    int lastSearchIndex;
-
     FileOperation fileHandler;
 
-    JDialog findReplaceDialog = null;
     JColorChooser bgColorChooser = null;
     JColorChooser fontColorChooser = null;
     JDialog backgroundDialog = null;
     JDialog foregroundDialog = null;
-    JMenuItem cutItem, copyItem, deleteItem, findItem, findNextItem,
-            replaceItem, gotoItem, selectAllItem;
+    JMenuItem cutItem;
+    JMenuItem copyItem;
+    JMenuItem deleteItem;
+    JMenuItem gotoItem;
+    JMenuItem selectAllItem;
 
     Notepad() {
         jFrame = new JFrame();
