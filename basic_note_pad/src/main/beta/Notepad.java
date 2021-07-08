@@ -1,10 +1,7 @@
 package main.beta;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Date;
@@ -32,7 +29,7 @@ public class Notepad implements ActionListener, MenuConstants {
         statusBar = new JLabel("||       Ln 1, Col 1  ", JLabel.RIGHT);
         jFrame.add(new JScrollPane(jTextArea), BorderLayout.CENTER);
         jFrame.add(statusBar, BorderLayout.SOUTH);
-        jFrame.add(new JLabel("  "), BorderLayout.EAST);
+        jFrame.add(new JLabel("  "), BorderLayout.EAST); // side padding/margin
         jFrame.add(new JLabel("  "), BorderLayout.WEST);
         createMenuBar(jFrame);
 
@@ -44,23 +41,21 @@ public class Notepad implements ActionListener, MenuConstants {
 
         fileHandler = new FileOperation(this);
 
-        jTextArea.addCaretListener(
-                event -> {
-                    int lineNumber = 0, column = 0, pos = 0;
+        jTextArea.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent event) {
+                int lineNumber = 0, column = 0, pos = 0;
 
-                    try {
-                        pos = jTextArea.getCaretPosition();
-                        lineNumber = jTextArea.getLineOfOffset(pos);
-                        column = pos - jTextArea.getLineStartOffset(lineNumber);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if (jTextArea.getText().length() == 0) {
-                        lineNumber = 0;
-                        column = 0;
-                    }
-                    statusBar.setText("||       Ln " + (lineNumber + 1) + ", Col " + (column + 1));
-                });
+                try {
+                    pos = jTextArea.getCaretPosition();
+                    lineNumber = jTextArea.getLineOfOffset(pos);
+                    column = pos - jTextArea.getLineStartOffset(lineNumber);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                statusBar.setText("||       Ln " + (lineNumber + 1) + ", Col " + (column + 1));
+            }
+        });
 
         DocumentListener documentListener = new DocumentListener() {
             @Override
@@ -109,21 +104,21 @@ public class Notepad implements ActionListener, MenuConstants {
         MenuListener editMenuListener = new MenuListener() {
             @Override
             public void menuSelected(MenuEvent e) {
-                if (Notepad.this.jTextArea.getText().length() == 0) {
+                if (jTextArea.getText().length() == 0) {
                     selectAllItem.setEnabled(false);
                     gotoItem.setEnabled(false);
                 } else {
                     selectAllItem.setEnabled(true);
                     gotoItem.setEnabled(true);
                 }
-                if (Notepad.this.jTextArea.getSelectionStart() == jTextArea.getSelectionEnd()) {
-                    cutItem.setEnabled(false);
-                    copyItem.setEnabled(false);
-                    deleteItem.setEnabled(false);
-                } else {
+                if (jTextArea.getSelectionStart() != jTextArea.getSelectionEnd()) {
                     cutItem.setEnabled(true);
                     copyItem.setEnabled(true);
                     deleteItem.setEnabled(true);
+                } else {
+                    cutItem.setEnabled(false);
+                    copyItem.setEnabled(false);
+                    deleteItem.setEnabled(false);
                 }
             }
 
@@ -151,10 +146,10 @@ public class Notepad implements ActionListener, MenuConstants {
         createMenuItem(fileSaveAs, KeyEvent.VK_A, fileMenu, this);
         fileMenu.addSeparator();
 
-        jMenuItemTemp = createMenuItem(filePageSetup, KeyEvent.VK_U, fileMenu, this);
-        jMenuItemTemp.setEnabled(false);
+        /*jMenuItemTemp = createMenuItem(filePageSetup, KeyEvent.VK_U, fileMenu, this);
+        jMenuItemTemp.setEnabled(false);*/
 
-        fileMenu.addSeparator();
+        // fileMenu.addSeparator();
         createMenuItem(fileExit, KeyEvent.VK_X, fileMenu, this);
     }
 

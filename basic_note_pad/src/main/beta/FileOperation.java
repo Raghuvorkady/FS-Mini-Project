@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
 
-class FileOperation  {
+class FileOperation {
     Notepad notepad;
 
     boolean saved;
@@ -46,20 +46,20 @@ class FileOperation  {
     }
 
     public boolean saveFile(File temp) {
-        FileWriter fout = null;
+        FileWriter fileWriter;
         try {
-            fout = new FileWriter(temp);
-            fout.write(notepad.jTextArea.getText());
+            fileWriter = new FileWriter(temp);
+            fileWriter.write(notepad.jTextArea.getText());
         } catch (IOException ioe) {
             updateStatus(temp, false);
             return false;
-        } finally {
-            try {
-                fout.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         updateStatus(temp, true);
         return true;
     }
