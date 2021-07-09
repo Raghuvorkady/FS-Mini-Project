@@ -3,11 +3,8 @@ package main.beta;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Date;
 
 public class Notepad implements ActionListener, MenuConstants {
     JFrame jFrame;
@@ -15,16 +12,6 @@ public class Notepad implements ActionListener, MenuConstants {
     JLabel statusBar;
 
     FileOperation fileHandler;
-
-    JColorChooser bgColorChooser = null;
-    JColorChooser fontColorChooser = null;
-    JDialog backgroundDialog = null;
-    JDialog foregroundDialog = null;
-    JMenuItem cutItem;
-    JMenuItem copyItem;
-    JMenuItem deleteItem;
-    JMenuItem gotoItem;
-    JMenuItem selectAllItem;
 
     Notepad() {
         jFrame = new JFrame();
@@ -94,51 +81,12 @@ public class Notepad implements ActionListener, MenuConstants {
         // file menu
         createFileMenu(jMenuBar);
 
-        // edit menu
-        JMenu editMenu = createEditMenu(jMenuBar);
-
-        // format menu
-        createFormatMenu(jMenuBar);
-
         // view menu
         createViewMenu(jMenuBar);
 
         // help menu
         createHelpMenu(jMenuBar);
 
-        MenuListener editMenuListener = new MenuListener() {
-            @Override
-            public void menuSelected(MenuEvent e) {
-                if (Notepad.this.jTextArea.getText().length() == 0) {
-                    selectAllItem.setEnabled(false);
-                    gotoItem.setEnabled(false);
-                } else {
-                    selectAllItem.setEnabled(true);
-                    gotoItem.setEnabled(true);
-                }
-                if (Notepad.this.jTextArea.getSelectionStart() == jTextArea.getSelectionEnd()) {
-                    cutItem.setEnabled(false);
-                    copyItem.setEnabled(false);
-                    deleteItem.setEnabled(false);
-                } else {
-                    cutItem.setEnabled(true);
-                    copyItem.setEnabled(true);
-                    deleteItem.setEnabled(true);
-                }
-            }
-
-            @Override
-            public void menuDeselected(MenuEvent e) {
-
-            }
-
-            @Override
-            public void menuCanceled(MenuEvent e) {
-
-            }
-        };
-
-        editMenu.addMenuListener(editMenuListener);
         jFrame.setJMenuBar(jMenuBar);
     }
 
@@ -151,42 +99,7 @@ public class Notepad implements ActionListener, MenuConstants {
         createMenuItem(fileSaveAs, KeyEvent.VK_A, fileMenu, this);
         fileMenu.addSeparator();
 
-        jMenuItemTemp = createMenuItem(filePageSetup, KeyEvent.VK_U, fileMenu, this);
-        jMenuItemTemp.setEnabled(false);
-
-        fileMenu.addSeparator();
         createMenuItem(fileExit, KeyEvent.VK_X, fileMenu, this);
-    }
-
-    private JMenu createEditMenu(JMenuBar jMenuBar) {
-        JMenuItem jMenuItemTemp;
-        JMenu editMenu = createMenu(editText, KeyEvent.VK_E, jMenuBar);
-        cutItem = createMenuItem(editCut, KeyEvent.VK_T, editMenu, KeyEvent.VK_X, this);
-        copyItem = createMenuItem(editCopy, KeyEvent.VK_C, editMenu, KeyEvent.VK_C, this);
-        createMenuItem(editPaste, KeyEvent.VK_P, editMenu, KeyEvent.VK_V, this);
-        deleteItem = createMenuItem(editDelete, KeyEvent.VK_L, editMenu, this);
-        deleteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
-        editMenu.addSeparator();
-
-        jMenuItemTemp = createMenuItem(editUndo, KeyEvent.VK_U, editMenu, KeyEvent.VK_Z, this);
-        jMenuItemTemp.setEnabled(false);
-        editMenu.addSeparator();
-
-        gotoItem = createMenuItem(editGoTo, KeyEvent.VK_G, editMenu, KeyEvent.VK_G, this);
-        editMenu.addSeparator();
-        selectAllItem = createMenuItem(editSelectAll, KeyEvent.VK_A, editMenu, KeyEvent.VK_A, this);
-        createMenuItem(editTimeDate, KeyEvent.VK_D, editMenu, this)
-                .setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
-        return editMenu;
-    }
-
-    private void createFormatMenu(JMenuBar jMenuBar) {
-        JMenu formatMenu = createMenu(formatText, KeyEvent.VK_O, jMenuBar);
-        createCheckBoxMenuItem(formatWordWrap, KeyEvent.VK_W, formatMenu, this);
-
-        formatMenu.addSeparator();
-        createMenuItem(formatForeground, KeyEvent.VK_T, formatMenu, this);
-        createMenuItem(formatBackground, KeyEvent.VK_P, formatMenu, this);
     }
 
     private void createViewMenu(JMenuBar jMenuBar) {
@@ -250,39 +163,6 @@ public class Notepad implements ActionListener, MenuConstants {
             case fileExit:
                 if (fileHandler.confirmSave()) System.exit(0);
                 break;
-            case editCut:
-                jTextArea.cut();
-                break;
-            case editCopy:
-                jTextArea.copy();
-                break;
-            case editPaste:
-                jTextArea.paste();
-                break;
-            case editDelete:
-                jTextArea.replaceSelection("");
-                break;
-            case editGoTo:
-                if (Notepad.this.jTextArea.getText().length() == 0)
-                    return;
-                goTo();
-                break;
-            case editSelectAll:
-                jTextArea.selectAll();
-                break;
-            case editTimeDate:
-                jTextArea.insert(new Date().toString(), jTextArea.getSelectionStart());
-                break;
-            case formatWordWrap:
-                JCheckBoxMenuItem jCheckBoxMenuItem1 = (JCheckBoxMenuItem) actionEvent.getSource();
-                jTextArea.setLineWrap(jCheckBoxMenuItem1.isSelected());
-                break;
-            case formatForeground:
-                showForegroundColorDialog();
-                break;
-            case formatBackground:
-                showBackgroundColorDialog();
-                break;
             case viewStatusBar:
                 JCheckBoxMenuItem jCheckBoxMenuItem2 = (JCheckBoxMenuItem) actionEvent.getSource();
                 statusBar.setVisible(jCheckBoxMenuItem2.isSelected());
@@ -295,43 +175,5 @@ public class Notepad implements ActionListener, MenuConstants {
                 statusBar.setText("This " + actionCommand + " command is yet to be implemented");
                 break;
         }
-    }
-
-    private void goTo() {
-        try {
-            int lineNumber = jTextArea.getLineOfOffset(jTextArea.getCaretPosition()) + 1;
-            String tempStr = JOptionPane.showInputDialog(jFrame, "Enter Line Number:", "" + lineNumber);
-            if (tempStr == null) {
-                return;
-            }
-            lineNumber = Integer.parseInt(tempStr);
-            jTextArea.setCaretPosition(jTextArea.getLineStartOffset(lineNumber - 1));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void showForegroundColorDialog() {
-        if (fontColorChooser == null) {
-            fontColorChooser = new JColorChooser();
-        }
-        if (foregroundDialog == null) {
-            foregroundDialog = JColorChooser.createDialog(Notepad.this.jFrame, formatForeground, false,
-                    fontColorChooser, event -> Notepad.this.jTextArea.setForeground(fontColorChooser.getColor()), null);
-        }
-
-        foregroundDialog.setVisible(true);
-    }
-
-    private void showBackgroundColorDialog() {
-        if (bgColorChooser == null) {
-            bgColorChooser = new JColorChooser();
-        }
-        if (backgroundDialog == null) {
-            backgroundDialog = JColorChooser.createDialog(Notepad.this.jFrame, formatBackground, false,
-                    bgColorChooser, event -> Notepad.this.jTextArea.setBackground(bgColorChooser.getColor()), null);
-        }
-
-        backgroundDialog.setVisible(true);
     }
 }
